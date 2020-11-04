@@ -6,11 +6,14 @@ import {getClass} from "../utils"
 function Photos(props) {
     const {allPhotos} = React.useContext(PhotosContext)
 
+    const photosHtml = allPhotos.map((item, index) => {
+        return <Image img={item} key={item.id} className={getClass(index)} />
+    })
+
     return (
         <main className="photos">
-            {allPhotos.map(item => <Image url={item.url}/>)}
+            {photosHtml}
             <h1>Images go here</h1>
-            <h2></h2>
         </main>
     )
 }
