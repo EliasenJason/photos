@@ -7,6 +7,17 @@ function PhotoContextProvider(props) {
 
     const url = 'https://raw.githubusercontent.com/bobziroll/scrimba-react-bootcamp-images/master/images.json'
 
+    function toggleFavorite(id) {
+        const updatedArr = allPhotos.map(photo => {
+            if(photo.id === id) {
+                console.log(`we are changing array item with id: ${id} to ${!photo.isFavorite}`)
+                return {...photo, isFavorite: !photo.isFavorite}
+            }
+            return photo
+        })
+        setAllPhotos(updatedArr)
+    }
+
     useEffect( () => {
         fetch(url)
             .then(res => res.json())
@@ -16,7 +27,7 @@ function PhotoContextProvider(props) {
     },[])
 
     return (
-        <PhotosContext.Provider value={{allPhotos: allPhotos}}>
+        <PhotosContext.Provider value={{allPhotos, toggleFavorite}}>
             {props.children}
         </PhotosContext.Provider>
     )
