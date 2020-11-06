@@ -13,7 +13,6 @@ function Photos(props) {
     return (
         <main className="photos">
             {photosHtml}
-            <h1>Images go here</h1>
         </main>
     )
 }

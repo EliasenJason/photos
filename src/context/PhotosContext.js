@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 
 const PhotosContext = React.createContext('test')
 
+
 function PhotoContextProvider(props) {
     const [allPhotos, setAllPhotos] = React.useState([])
 
@@ -10,8 +11,19 @@ function PhotoContextProvider(props) {
     function toggleFavorite(id) {
         const updatedArr = allPhotos.map(photo => {
             if(photo.id === id) {
-                console.log(`we are changing array item with id: ${id} to ${!photo.isFavorite}`)
+                console.log(`favoriting array item with id: ${id} to ${!photo.isFavorite}`)
                 return {...photo, isFavorite: !photo.isFavorite}
+            }
+            return photo
+        })
+        setAllPhotos(updatedArr)
+    }
+
+    function addToCart(id) {
+        const updatedArr = allPhotos.map(photo => {
+            if(photo.id === id) {
+                console.log(`adding to cart array item with id: ${id} to ${!photo.isInCart}`)
+                return {...photo, isInCart: !photo.isInCart}
             }
             return photo
         })
@@ -22,12 +34,12 @@ function PhotoContextProvider(props) {
         fetch(url)
             .then(res => res.json())
             .then(json => {
-                setAllPhotos(json)
+                setAllPhotos(json.map(item => ({...item, isInCart: false})))
             })
     },[])
 
     return (
-        <PhotosContext.Provider value={{allPhotos, toggleFavorite}}>
+        <PhotosContext.Provider value={{allPhotos, toggleFavorite, addToCart}}>
             {props.children}
         </PhotosContext.Provider>
     )
